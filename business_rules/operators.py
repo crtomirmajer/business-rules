@@ -242,6 +242,8 @@ class EnumType(BaseType):
     The SelectType appears to expect a list, the enum type expects a
     string value and compares it to a fixed list of choices.
     """
+    name = "enum"
+    
     def _assert_valid_value_and_cast(self, value):
         value = value or ""
         if not isinstance(value, string_types):
