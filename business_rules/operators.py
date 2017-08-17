@@ -253,9 +253,9 @@ class EnumType(BaseType):
     
     @type_operator(FIELD_SELECT, label="Direct String Comparison")
     def equal_to(self, other_string):
-        self.value == other_string
+        return self.value == other_string
 
     @type_operator(FIELD_SELECT, label="Case Insensitive String Comparison")
     def equal_to_case_insensitive(self, other_string):
-        self.value.lower() == other_string.lower()
+        return self.value.lower() == other_string.lower()
 
