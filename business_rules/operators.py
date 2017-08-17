@@ -235,3 +235,25 @@ class SelectMultipleType(BaseType):
     @type_operator(FIELD_SELECT_MULTIPLE)
     def shares_no_elements_with(self, other_value):
         return not self.shares_at_least_one_element_with(other_value)
+      
+@export_type
+class EnumType(BaseType):
+    """
+    The SelectType appears to expect a list, the enum type expects a
+    string value and compares it to a fixed list of choices.
+    """
+    def _assert_valid_value_and_cast(self, value):
+        value = value or ""
+        if not isinstance(value, string_types):
+            raise AssertionError("{0} is not a valid string type.".
+                                 format(value))
+        return value
+    
+    @type_operator(FIELD_SELECT, label="Direct String Comparison")
+    def equal_to(self, other_string):
+        self.value == other_string
+
+    @type_operator(FIELD_SELECT, label="Case Insensitive String Comparison")
+    def equal_to_case_insensitive(self, other_string):
+        self.value.lower() == other_string.lower()
+
